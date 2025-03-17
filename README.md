@@ -104,3 +104,10 @@ void main() async {
 
 ```
 
+## Issues
+
+Please file any issues, bugs, or feature requests at the [issue tracker](https://github.com/headlines-toolkit/ht-preferences-inmemory/issues).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
