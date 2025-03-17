@@ -1,3 +1,4 @@
+//
 //ignore_for_file: lines_longer_than_80_chars
 
 import 'package:ht_preferences_client/ht_preferences_client.dart';
@@ -66,7 +67,7 @@ void main() {
         throwsA(isA<SourceNotFoundException>()),
       );
     });
-     test('getFavoriteCategories returns empty list by default', () async {
+    test('getFavoriteCategories returns empty list by default', () async {
       expect(await client.getFavoriteCategories(), isEmpty);
     });
 
@@ -101,7 +102,10 @@ void main() {
 
     test('setFavoriteEventCountries updates favorite countries', () async {
       await client.setFavoriteEventCountries(['country1', 'country2']);
-      expect(await client.getFavoriteEventCountries(), ['country1', 'country2']);
+      expect(
+        await client.getFavoriteEventCountries(),
+        ['country1', 'country2'],
+      );
     });
 
     test('addFavoriteEventCountry adds country to favorites', () async {
