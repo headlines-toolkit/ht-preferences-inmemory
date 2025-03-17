@@ -8,7 +8,6 @@ Add `ht_preferences_inmemory` as a dependency in your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  ht_preferences_client: ^1.0.0 # Replace with the actual version
   ht_preferences_inmemory:
     git:
       url: https://github.com/headlines-toolkit/ht-preferences-inmemory.git
