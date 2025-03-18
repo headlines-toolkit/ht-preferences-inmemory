@@ -7,8 +7,10 @@ class HtPreferencesInMemory implements HtPreferencesClient {
   /// {@macro ht_preferences_inmemory}
   HtPreferencesInMemory() : _preferences = {};
 
-  
   final Map<String, dynamic> _preferences;
+
+  /// Returns all preferences.
+  Map<String, dynamic> get allPreferences => _preferences;
 
   @override
   Future<String> getLanguage() async {
