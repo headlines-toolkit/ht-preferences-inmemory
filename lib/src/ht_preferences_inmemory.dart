@@ -5,15 +5,28 @@ import 'package:ht_preferences_client/ht_preferences_client.dart';
 /// {@endtemplate}
 class HtPreferencesInMemory implements HtPreferencesClient {
   /// {@macro ht_preferences_inmemory}
-  HtPreferencesInMemory() : _preferences = {};
+  HtPreferencesInMemory()
+      : _preferences = {},
+        _throwError = false;
 
   final Map<String, dynamic> _preferences;
 
   /// Returns all preferences.
   Map<String, dynamic> get allPreferences => _preferences;
 
+  bool _throwError;
+
+  /// Sets whether to throw an error on the next operation. For testing only.
+  // ignore: avoid_positional_boolean_parameters, use_setters_to_change_properties
+  void setThrowError(bool value) {
+    _throwError = value;
+  }
+
   @override
   Future<String> getLanguage() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       return _preferences['language'] as String? ?? 'en';
     } catch (e) {
@@ -23,6 +36,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> setLanguage(String language) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     if (language.length != 2) {
       throw InvalidLanguageException(language);
     }
@@ -35,6 +51,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<ThemeMode> getTheme() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final theme = _preferences['theme'] as String?;
       return ThemeMode.values.firstWhere(
@@ -48,6 +67,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> setTheme(ThemeMode theme) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       _preferences['theme'] = theme.toString();
     } catch (e) {
@@ -57,6 +79,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<List<String>> getFollowedSourceIds() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       return List<String>.from(
         _preferences['followedSourceIds'] as List? ?? [],
@@ -68,6 +93,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> setFollowedSourceIds(List<String> sources) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       _preferences['followedSourceIds'] = sources;
     } catch (e) {
@@ -77,6 +105,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> addFollowedSourceId(String source) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final sources = await getFollowedSourceIds();
       if (!sources.contains(source)) {
@@ -90,6 +121,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> removeFollowedSourceId(String source) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final sources = await getFollowedSourceIds();
       if (!sources.contains(source)) {
@@ -107,6 +141,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<List<String>> getFollowedCategoryIds() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       return List<String>.from(
         _preferences['followedCategoryIds'] as List? ?? [],
@@ -118,6 +155,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> setFollowedCategoryIds(List<String> categories) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       _preferences['followedCategoryIds'] = categories;
     } catch (e) {
@@ -127,6 +167,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> addFollowedCategoryId(String category) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final categories = await getFollowedCategoryIds();
       if (!categories.contains(category)) {
@@ -140,6 +183,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> removeFollowedCategoryId(String category) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final categories = await getFollowedCategoryIds();
       if (!categories.contains(category)) {
@@ -157,6 +203,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<List<String>> getFollowedEventCountryIds() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       return List<String>.from(
         _preferences['followedEventCountryIds'] as List? ?? [],
@@ -168,6 +217,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> setFollowedEventCountryIds(List<String> countries) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       _preferences['followedEventCountryIds'] = countries;
     } catch (e) {
@@ -177,6 +229,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> addFollowedEventCountryId(String country) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final countries = await getFollowedEventCountryIds();
       if (!countries.contains(country)) {
@@ -190,6 +245,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> removeFollowedEventCountryId(String country) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final countries = await getFollowedEventCountryIds();
       if (!countries.contains(country)) {
@@ -207,6 +265,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> removeAllFollowedSourceIds() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       await setFollowedSourceIds([]);
     } catch (e) {
@@ -216,6 +277,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> removeAllFollowedCategoryIds() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       await setFollowedCategoryIds([]);
     } catch (e) {
@@ -225,6 +289,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> removeAllFollowedEventCountryIds() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       await setFollowedEventCountryIds([]);
     } catch (e) {
@@ -234,6 +301,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<HeadlineArticleTextSize> getHeadlineArticleTextSize() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final textSize = _preferences['headlineArticleTextSize'] as String?;
       return HeadlineArticleTextSize.values.firstWhere(
@@ -249,6 +319,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
   Future<void> setHeadlineArticleTextSize(
     HeadlineArticleTextSize textSize,
   ) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       _preferences['headlineArticleTextSize'] = textSize.toString();
     } catch (e) {
@@ -258,6 +331,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<AppFontSize> getAppFontSize() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final fontSize = _preferences['appFontSize'] as String?;
       return AppFontSize.values.firstWhere(
@@ -271,6 +347,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> setAppFontSize(AppFontSize fontSize) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       _preferences['appFontSize'] = fontSize.toString();
     } catch (e) {
@@ -280,6 +359,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<List<String>> getSavedHeadlines() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       return List<String>.from(_preferences['savedHeadlines'] as List? ?? []);
     } catch (e) {
@@ -289,6 +371,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> setSavedHeadlines(List<String> headlines) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       _preferences['savedHeadlines'] = headlines;
     } catch (e) {
@@ -298,6 +383,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> addSavedHeadline(String headline) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final headlines = await getSavedHeadlines();
       if (!headlines.contains(headline)) {
@@ -311,6 +399,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> removeSavedHeadline(String headline) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final headlines = await getSavedHeadlines();
       if (!headlines.contains(headline)) {
@@ -328,6 +419,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> removeAllSavedHeadlines() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       await setSavedHeadlines([]);
     } catch (e) {
@@ -337,6 +431,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<ContentDensity> getContentDensity() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final contentDensity = _preferences['contentDensity'] as String?;
       return ContentDensity.values.firstWhere(
@@ -350,6 +447,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> setContentDensity(ContentDensity contentDensity) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       _preferences['contentDensity'] = contentDensity.toString();
     } catch (e) {
@@ -359,6 +459,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<FeedTileLayout> getFeedTileLayout() async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       final feedTileLayout = _preferences['feedTileLayout'] as String?;
       return FeedTileLayout.values.firstWhere(
@@ -372,6 +475,9 @@ class HtPreferencesInMemory implements HtPreferencesClient {
 
   @override
   Future<void> setFeedTileLayout(FeedTileLayout feedTileLayout) async {
+    if (_throwError) {
+      throw PreferencesStorageException();
+    }
     try {
       _preferences['feedTileLayout'] = feedTileLayout.toString();
     } catch (e) {
