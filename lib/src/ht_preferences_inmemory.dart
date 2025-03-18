@@ -7,6 +7,11 @@ class HtPreferencesInMemory implements HtPreferencesClient {
   /// {@macro ht_preferences_inmemory}
   HtPreferencesInMemory() : _preferences = {};
 
+  /// {@macro ht_preferences_inmemory}
+  // ignore: use_for_testing_only
+  HtPreferencesInMemory.test(Map<String, dynamic> preferences)
+      : _preferences = preferences;
+
   final Map<String, dynamic> _preferences;
 
   @override
