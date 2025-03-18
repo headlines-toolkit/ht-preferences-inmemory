@@ -1,315 +1,336 @@
-//
-import 'package:ht_preferences_client/ht_preferences_client.dart';
+import 'package:ht_preferences_inmemory/ht_preferences_inmemory.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 class MockHtPreferencesClient extends Mock implements HtPreferencesClient {}
 
 void main() {
-  group('PreferencesStorageException', () {
-    late HtPreferencesClient preferences;
+  group('HtPreferencesInMemory', () {
+    late HtPreferencesInMemory preferences;
 
     setUp(() {
-      preferences = MockHtPreferencesClient();
+      preferences = HtPreferencesInMemory();
     });
 
-    test('getLanguage throws PreferencesStorageException', () async {
-      when(preferences.getLanguage).thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.getLanguage(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    test('can be instantiated', () {
+      expect(HtPreferencesInMemory(), isNotNull);
     });
 
-    test('setLanguage throws PreferencesStorageException', () async {
-      when(() => preferences.setLanguage(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.setLanguage('en'),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('getLanguage', () {
+      test('returns default language when not set', () async {
+        expect(await preferences.getLanguage(), equals('en'));
+      });
+
+      test('returns set language', () async {
+        await preferences.setLanguage('fr');
+        expect(await preferences.getLanguage(), equals('fr'));
+      });
     });
 
-    test('getTheme throws PreferencesStorageException', () async {
-      when(preferences.getTheme).thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.getTheme(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('setTheme throws PreferencesStorageException', () async {
-      when(() => preferences.setTheme(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.setTheme(ThemeMode.system),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('getFollowedSourceIds throws PreferencesStorageException', () async {
-      when(preferences.getFollowedSourceIds)
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.getFollowedSourceIds(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('setFollowedSourceIds throws PreferencesStorageException', () async {
-      when(() => preferences.setFollowedSourceIds(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.setFollowedSourceIds([]),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('addFollowedSourceId throws PreferencesStorageException', () async {
-      when(() => preferences.addFollowedSourceId(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.addFollowedSourceId('source1'),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('removeFollowedSourceId throws PreferencesStorageException', () async {
-      when(() => preferences.removeFollowedSourceId(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.removeFollowedSourceId('source1'),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('getFollowedCategoryIds throws PreferencesStorageException', () async {
-      when(preferences.getFollowedCategoryIds)
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.getFollowedCategoryIds(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('setFollowedCategoryIds throws PreferencesStorageException', () async {
-      when(() => preferences.setFollowedCategoryIds(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.setFollowedCategoryIds([]),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('addFollowedCategoryId throws PreferencesStorageException', () async {
-      when(() => preferences.addFollowedCategoryId(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.addFollowedCategoryId('category1'),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('removeFollowedCategoryId throws PreferencesStorageException',
-        () async {
-      when(() => preferences.removeFollowedCategoryId(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.removeFollowedCategoryId('category1'),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('getFollowedEventCountryIds throws PreferencesStorageException',
-        () async {
-      when(preferences.getFollowedEventCountryIds)
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.getFollowedEventCountryIds(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('setFollowedEventCountryIds throws PreferencesStorageException',
-        () async {
-      when(() => preferences.setFollowedEventCountryIds(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.setFollowedEventCountryIds([]),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('addFollowedEventCountryId throws PreferencesStorageException',
-        () async {
-      when(() => preferences.addFollowedEventCountryId(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.addFollowedEventCountryId('country1'),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('removeFollowedEventCountryId throws PreferencesStorageException',
-        () async {
-      when(() => preferences.removeFollowedEventCountryId(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.removeFollowedEventCountryId('country1'),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('removeAllFollowedSourceIds throws PreferencesStorageException',
-        () async {
-      when(preferences.removeAllFollowedSourceIds)
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.removeAllFollowedSourceIds(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test('removeAllFollowedCategoryIds throws PreferencesStorageException',
-        () async {
-      when(preferences.removeAllFollowedCategoryIds)
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.removeAllFollowedCategoryIds(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
-    });
-
-    test(
-      'removeAllFollowedEventCountryIds throws PreferencesStorageException',
-      () async {
-        when(preferences.removeAllFollowedEventCountryIds)
-            .thenThrow(PreferencesStorageException());
+    group('setLanguage', () {
+      test('throws InvalidLanguageException for invalid language code',
+          () async {
         expect(
-          () async => preferences.removeAllFollowedEventCountryIds(),
-          throwsA(isA<PreferencesStorageException>()),
+          () async => preferences.setLanguage('invalid'),
+          throwsA(isA<InvalidLanguageException>()),
         );
-      },
-    );
-
-    test('getHeadlineArticleTextSize throws PreferencesStorageException',
-        () async {
-      when(preferences.getHeadlineArticleTextSize)
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.getHeadlineArticleTextSize(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+      });
     });
 
-    test('setHeadlineArticleTextSize throws PreferencesStorageException',
-        () async {
-      when(() => preferences.setHeadlineArticleTextSize(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences
-            .setHeadlineArticleTextSize(HeadlineArticleTextSize.medium),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('getTheme', () {
+      test('returns default theme when not set', () async {
+        expect(await preferences.getTheme(), equals(ThemeMode.system));
+      });
+
+      test('returns set theme', () async {
+        await preferences.setTheme(ThemeMode.dark);
+        expect(await preferences.getTheme(), equals(ThemeMode.dark));
+      });
     });
 
-    test('getAppFontSize throws PreferencesStorageException', () async {
-      when(preferences.getAppFontSize).thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.getAppFontSize(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('getFollowedSourceIds', () {
+      test('returns empty list when not set', () async {
+        expect(await preferences.getFollowedSourceIds(), isEmpty);
+      });
+
+      test('returns set source IDs', () async {
+        await preferences.setFollowedSourceIds(['source1', 'source2']);
+        expect(
+          await preferences.getFollowedSourceIds(),
+          equals(['source1', 'source2']),
+        );
+      });
     });
 
-    test('setAppFontSize throws PreferencesStorageException', () async {
-      when(() => preferences.setAppFontSize(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.setAppFontSize(AppFontSize.medium),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('addFollowedSourceId', () {
+      test('adds a source ID', () async {
+        await preferences.addFollowedSourceId('source1');
+        expect(await preferences.getFollowedSourceIds(), equals(['source1']));
+      });
+
+      test('does not add duplicate source IDs', () async {
+        await preferences.addFollowedSourceId('source1');
+        await preferences.addFollowedSourceId('source1');
+        expect(await preferences.getFollowedSourceIds(), equals(['source1']));
+      });
     });
 
-    test('getSavedHeadlines throws PreferencesStorageException', () async {
-      when(preferences.getSavedHeadlines)
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.getSavedHeadlines(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('removeFollowedSourceId', () {
+      test('removes a source ID', () async {
+        await preferences.setFollowedSourceIds(['source1', 'source2']);
+        await preferences.removeFollowedSourceId('source1');
+        expect(await preferences.getFollowedSourceIds(), equals(['source2']));
+      });
+
+      test('throws SourceNotFoundException when source is not found', () async {
+        expect(
+          () async => preferences.removeFollowedSourceId('source1'),
+          throwsA(isA<SourceNotFoundException>()),
+        );
+      });
     });
 
-    test('setSavedHeadlines throws PreferencesStorageException', () async {
-      when(() => preferences.setSavedHeadlines(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.setSavedHeadlines([]),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('removeAllFollowedSourceIds', () {
+      test('removes all source IDs', () async {
+        await preferences.setFollowedSourceIds(['source1', 'source2']);
+        await preferences.removeAllFollowedSourceIds();
+        expect(await preferences.getFollowedSourceIds(), isEmpty);
+      });
     });
 
-    test('addSavedHeadline throws PreferencesStorageException', () async {
-      when(() => preferences.addSavedHeadline(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.addSavedHeadline('headline1'),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('getFollowedCategoryIds', () {
+      test('returns empty list when not set', () async {
+        expect(await preferences.getFollowedCategoryIds(), isEmpty);
+      });
+
+      test('returns set category IDs', () async {
+        await preferences.setFollowedCategoryIds(['category1', 'category2']);
+        expect(
+          await preferences.getFollowedCategoryIds(),
+          equals(['category1', 'category2']),
+        );
+      });
     });
 
-    test('removeSavedHeadline throws PreferencesStorageException', () async {
-      when(() => preferences.removeSavedHeadline(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.removeSavedHeadline('headline1'),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('addFollowedCategoryId', () {
+      test('adds a category ID', () async {
+        await preferences.addFollowedCategoryId('category1');
+        expect(
+          await preferences.getFollowedCategoryIds(),
+          equals(['category1']),
+        );
+      });
+
+      test('does not add duplicate category IDs', () async {
+        await preferences.addFollowedCategoryId('category1');
+        await preferences.addFollowedCategoryId('category1');
+        expect(
+          await preferences.getFollowedCategoryIds(),
+          equals(['category1']),
+        );
+      });
     });
 
-    test('removeAllSavedHeadlines throws PreferencesStorageException',
-        () async {
-      when(preferences.removeAllSavedHeadlines)
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.removeAllSavedHeadlines(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('removeFollowedCategoryId', () {
+      test('removes a category ID', () async {
+        await preferences.setFollowedCategoryIds(['category1', 'category2']);
+        await preferences.removeFollowedCategoryId('category1');
+        expect(
+          await preferences.getFollowedCategoryIds(),
+          equals(['category2']),
+        );
+      });
+
+      test('throws CategoryNotFoundException when category is not found',
+          () async {
+        expect(
+          () async => preferences.removeFollowedCategoryId('category1'),
+          throwsA(isA<CategoryNotFoundException>()),
+        );
+      });
     });
 
-    test('getContentDensity throws PreferencesStorageException', () async {
-      when(preferences.getContentDensity)
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.getContentDensity(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('removeAllFollowedCategoryIds', () {
+      test('removes all category IDs', () async {
+        await preferences.setFollowedCategoryIds(['category1', 'category2']);
+        await preferences.removeAllFollowedCategoryIds();
+        expect(await preferences.getFollowedCategoryIds(), isEmpty);
+      });
     });
 
-    test('setContentDensity throws PreferencesStorageException', () async {
-      when(() => preferences.setContentDensity(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.setContentDensity(ContentDensity.comfortable),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('getFollowedEventCountryIds', () {
+      test('returns empty list when not set', () async {
+        expect(await preferences.getFollowedEventCountryIds(), isEmpty);
+      });
+
+      test('returns set country IDs', () async {
+        await preferences.setFollowedEventCountryIds(['country1', 'country2']);
+        expect(
+          await preferences.getFollowedEventCountryIds(),
+          equals(['country1', 'country2']),
+        );
+      });
     });
 
-    test('getFeedTileLayout throws PreferencesStorageException', () async {
-      when(preferences.getFeedTileLayout)
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.getFeedTileLayout(),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('addFollowedEventCountryId', () {
+      test('adds a country ID', () async {
+        await preferences.addFollowedEventCountryId('country1');
+        expect(
+          await preferences.getFollowedEventCountryIds(),
+          equals(['country1']),
+        );
+      });
+
+      test('does not add duplicate country IDs', () async {
+        await preferences.addFollowedEventCountryId('country1');
+        await preferences.addFollowedEventCountryId('country1');
+        expect(
+          await preferences.getFollowedEventCountryIds(),
+          equals(['country1']),
+        );
+      });
     });
 
-    test('setFeedTileLayout throws PreferencesStorageException', () async {
-      when(() => preferences.setFeedTileLayout(any()))
-          .thenThrow(PreferencesStorageException());
-      expect(
-        () async => preferences.setFeedTileLayout(FeedTileLayout.imageStart),
-        throwsA(isA<PreferencesStorageException>()),
-      );
+    group('removeFollowedEventCountryId', () {
+      test('removes a country ID', () async {
+        await preferences.setFollowedEventCountryIds(['country1', 'country2']);
+        await preferences.removeFollowedEventCountryId('country1');
+        expect(
+          await preferences.getFollowedEventCountryIds(),
+          equals(['country2']),
+        );
+      });
+
+      test('throws CountryNotFoundException when country is not found',
+          () async {
+        expect(
+          () async => preferences.removeFollowedEventCountryId('country1'),
+          throwsA(isA<CountryNotFoundException>()),
+        );
+      });
+    });
+
+    group('removeAllFollowedEventCountryIds', () {
+      test('removes all country IDs', () async {
+        await preferences.setFollowedEventCountryIds(['country1', 'country2']);
+        await preferences.removeAllFollowedEventCountryIds();
+        expect(await preferences.getFollowedEventCountryIds(), isEmpty);
+      });
+    });
+
+    group('getHeadlineArticleTextSize', () {
+      test('returns default text size when not set', () async {
+        expect(
+          await preferences.getHeadlineArticleTextSize(),
+          equals(HeadlineArticleTextSize.medium),
+        );
+      });
+
+      test('returns set text size', () async {
+        await preferences.setHeadlineArticleTextSize(
+          HeadlineArticleTextSize.large,
+        );
+        expect(
+          await preferences.getHeadlineArticleTextSize(),
+          equals(HeadlineArticleTextSize.large),
+        );
+      });
+    });
+
+    group('getAppFontSize', () {
+      test('returns default font size when not set', () async {
+        expect(await preferences.getAppFontSize(), equals(AppFontSize.medium));
+      });
+
+      test('returns set font size', () async {
+        await preferences.setAppFontSize(AppFontSize.large);
+        expect(await preferences.getAppFontSize(), equals(AppFontSize.large));
+      });
+    });
+
+    group('getSavedHeadlines', () {
+      test('returns empty list when not set', () async {
+        expect(await preferences.getSavedHeadlines(), isEmpty);
+      });
+
+      test('returns set headlines', () async {
+        await preferences.setSavedHeadlines(['headline1', 'headline2']);
+        expect(
+          await preferences.getSavedHeadlines(),
+          equals(['headline1', 'headline2']),
+        );
+      });
+    });
+
+    group('addSavedHeadline', () {
+      test('adds a headline', () async {
+        await preferences.addSavedHeadline('headline1');
+        expect(await preferences.getSavedHeadlines(), equals(['headline1']));
+      });
+
+      test('does not add duplicate headlines', () async {
+        await preferences.addSavedHeadline('headline1');
+        await preferences.addSavedHeadline('headline1');
+        expect(await preferences.getSavedHeadlines(), equals(['headline1']));
+      });
+    });
+
+    group('removeSavedHeadline', () {
+      test('removes a headline', () async {
+        await preferences.setSavedHeadlines(['headline1', 'headline2']);
+        await preferences.removeSavedHeadline('headline1');
+        expect(await preferences.getSavedHeadlines(), equals(['headline2']));
+      });
+
+      test('throws HeadlineNotFoundException when headline is not found',
+          () async {
+        expect(
+          () async => preferences.removeSavedHeadline('headline1'),
+          throwsA(isA<HeadlineNotFoundException>()),
+        );
+      });
+    });
+
+    group('removeAllSavedHeadlines', () {
+      test('removes all headlines', () async {
+        await preferences.setSavedHeadlines(['headline1', 'headline2']);
+        await preferences.removeAllSavedHeadlines();
+        expect(await preferences.getSavedHeadlines(), isEmpty);
+      });
+    });
+
+    group('getContentDensity', () {
+      test('returns default content density when not set', () async {
+        expect(
+          await preferences.getContentDensity(),
+          equals(ContentDensity.comfortable),
+        );
+      });
+
+      test('returns set content density', () async {
+        await preferences.setContentDensity(ContentDensity.compact);
+        expect(
+          await preferences.getContentDensity(),
+          equals(ContentDensity.compact),
+        );
+      });
+    });
+
+    group('getFeedTileLayout', () {
+      test('returns default feed tile layout when not set', () async {
+        expect(
+          await preferences.getFeedTileLayout(),
+          equals(FeedTileLayout.imageStart),
+        );
+      });
+
+      test('returns set feed tile layout', () async {
+        await preferences.setFeedTileLayout(FeedTileLayout.imageTop);
+        expect(
+          await preferences.getFeedTileLayout(),
+          equals(FeedTileLayout.imageTop),
+        );
+      });
     });
   });
 }
