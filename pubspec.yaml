@@ -10,7 +10,6 @@ dependencies:
   ht_preferences_client:
     git:
         url: https://github.com/headlines-toolkit/ht-preferences-client.git
-        ref: main
 
 dev_dependencies:
   mocktail: ^1.0.4
