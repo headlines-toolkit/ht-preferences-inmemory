@@ -4,7 +4,7 @@ publish_to: none
 repository: https://github.com/headlines-toolkit/ht-preferences-inmemory
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.7.0
 
 dependencies: 
   ht_preferences_client:
